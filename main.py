@@ -26,7 +26,7 @@ async def developer(developer:str):
     
     Monster Games
     """
-    df_games = pd.read_parquet(r'Dataset\developer.parquet')
+    df_games = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/82702a42172b2b0f23c1e24c6f9fdb294c52d78e/Dataset/developer.parquet?raw=True')
 
     df_filtrado = df_games[df_games['developer'] == developer]
 
