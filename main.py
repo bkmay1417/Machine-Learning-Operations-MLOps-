@@ -85,7 +85,7 @@ async def best_developer_year(year:int):
     [{"Puesto 1" : X}, {"Puesto 2" : Y},{"Puesto 3" : Z}]
     
     """
-    merged_df = pd.read_parquet(r'Dataset\best_developer_year.parquet')
+    merged_df = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/8f87ccc010ef4ab3025d5e95d5f0cc1ee11fd276/Dataset/best_developer_year.parquet?raw=True')
     merged_df = merged_df[(merged_df['release_date'] == year) ]
     developer_counts = merged_df['developer'].value_counts()
     top_developers = developer_counts.head(3).index
@@ -108,7 +108,7 @@ async def developer_reviews_analysis(desarrolladora):
     {'Valve' : [Negative = 182, Positive = 278]}
     
     """
-    reviews = pd.read_parquet(r'Dataset\reviews_analysis.parquet')
+    reviews = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/8f87ccc010ef4ab3025d5e95d5f0cc1ee11fd276/Dataset/reviews_analysis.parquet?raw=True')
 
     reviews = reviews[(reviews['developer'] == desarrolladora) ]
     counts = reviews['sentiment_analysis'].value_counts()
