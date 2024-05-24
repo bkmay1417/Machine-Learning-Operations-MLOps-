@@ -1,10 +1,13 @@
-from fastapi import FastAPI, Request, Query, Path
+from fastapi import FastAPI, Request, Query, Path, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import json
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+
+app= FastAPI(title='Proyecto Integrador I Hecho por Michael Martinez')
+templates = Jinja2Templates(directory="templates")
 
 df_recom = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/4e23689d2e1a74fddcc9251cee8614c16618cbcf/Dataset/recomendacion.parquet?raw=True')
 
@@ -14,8 +17,7 @@ tfidf_matrix = vectorizer.fit_transform(df_recom['genres_str'])
 # Calcular la similitud del coseno
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)# optimizar
 
-app= FastAPI(title='Proyecto Integrador I Hecho por Michael Martinez')
-templates = Jinja2Templates(directory="templates")
+
 
 @app.get("/", tags=['Página Principal'])
 async def read_root(request: Request):
@@ -135,6 +137,8 @@ async def developer_reviews_analysis(desarrolladora= Query(default='Valve')):
 
 @app.get("/Sistema de recomendacion")
 async def recomendacion_juego(item_id:float= Query(default= 10.0)):
+    if item_id not in df_recom['item_id'].values:
+        raise HTTPException(status_code=404, detail="Item ID no encontrado")
     """
     10.0 = couter srike
     """

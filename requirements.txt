@@ -40,4 +40,4 @@ ujson==5.10.0
 uvicorn==0.29.0
 watchfiles==0.21.0
 websockets==12.0
-scikit-learn==1.2.2
+scikit-learn==1.4.2
