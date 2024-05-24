@@ -6,7 +6,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-df_recom = pd.read_parquet(r'Dataset\recomendacion.parquet')
+df_recom = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/4e23689d2e1a74fddcc9251cee8614c16618cbcf/Dataset/recomendacion.parquet?raw=True')
 
 # Vectorizar los géneros
 vectorizer = TfidfVectorizer()
