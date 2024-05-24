@@ -1,10 +1,20 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Query, Path
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import json
 import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-app = FastAPI()
+df_recom = pd.read_parquet(r'Dataset\recomendacion.parquet')
+
+# Vectorizar los géneros
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(df_recom['genres_str'])
+# Calcular la similitud del coseno
+cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)# optimizar
+
+app= FastAPI(title='Proyecto Integrador I Hecho por Michael Martinez')
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/", tags=['Página Principal'])
@@ -14,7 +24,7 @@ async def read_root(request: Request):
 
 
 @app.get("/consulta1")
-async def developer(developer:str):
+async def developer(developer:str = Query(default='Monster Games')):
     """
     ( desarrollador : str ): Cantidad de items y porcentaje de contenido 
     Free por año según empresa desarrolladora. Ejemplo de retorno:
@@ -75,8 +85,8 @@ async def UserForGenre():
     """
     return()
 
-@app.get("/consulta4/{year}")
-async def best_developer_year(year:int):
+@app.get("/consulta4")
+async def best_developer_year(year: int = Query(default=2005)):
     """
     ( año : int ): Devuelve el top 3 de desarrolladores con juegos MÁS recomendados por 
     usuarios para el año dado. (reviews.recommend = True y comentarios positivos)
@@ -97,7 +107,7 @@ async def best_developer_year(year:int):
     return(result)
 
 @app.get("/consulta5")
-async def developer_reviews_analysis(desarrolladora):
+async def developer_reviews_analysis(desarrolladora= Query(default='Valve')):
     """
     ( desarrolladora : str ): Según el desarrollador, se devuelve un diccionario con el 
     nombre del desarrollador como llave y una lista con la cantidad total de registros de 
@@ -122,3 +132,25 @@ async def developer_reviews_analysis(desarrolladora):
 
     
     return(resultado)
+
+@app.get("/Sistema de recomendacion")
+async def recomendacion_juego(item_id:float= Query(default= 10.0)):
+    """
+    10.0 = couter srike
+    """
+    # Obtener el índice del juego dado su item_id
+    idx = df_recom[df_recom['item_id'] == item_id].index[0]
+
+    # Obtener las puntuaciones de similitud del juego con todos los demás juegos
+    sim_scores = list(enumerate(cosine_sim[idx]))
+
+    # Ordenar los juegos por puntuación de similitud (de mayor a menor)
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+    # Obtener los índices de los 5 juegos más similares (excluyendo el propio juego)
+    sim_scores = sim_scores[1:6]
+
+    # Obtener los item_id de los 5 juegos más similares
+    game_indices = [i[0] for i in sim_scores]
+    
+    return df_recom['title'].iloc[game_indices].tolist()
