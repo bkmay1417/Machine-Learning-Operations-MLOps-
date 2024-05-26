@@ -90,7 +90,7 @@ async def UserForGenre(genero:str = Query(default='Action')):
      {"Usuario X" : us213ndjss09sdf, "Dinero gastado": 200 USD, "% de recomendación": 20%, "cantidad de items": 5}
     
     """
-    df =pd.read_parquet(r'Dataset\UserForGenre.parquet')
+    df =pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/24007966593d2680fcec0321bcf520ef0e8a2b1f/Dataset/UserForGenre.parquet?raw=True')
    # Filtrar el DataFrame por el género dado
     df_genero = df[df['genres'].apply(lambda x: genero in x)]
     
