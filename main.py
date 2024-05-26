@@ -75,10 +75,13 @@ async def userdata():
      {"Usuario X" : us213ndjss09sdf, "Dinero gastado": 200 USD, "% de recomendación": 20%, "cantidad de items": 5}
     
     """
+
+
+
     return()
 
 @app.get("/consulta3")
-async def UserForGenre():
+async def UserForGenre(genero:str = Query(default='Action')):
     """
     ( User_id : str ): Debe devolver cantidad de dinero gastado por el usuario,
      el porcentaje de recomendación en base areviews.recommend y cantidad de items.
@@ -87,7 +90,40 @@ async def UserForGenre():
      {"Usuario X" : us213ndjss09sdf, "Dinero gastado": 200 USD, "% de recomendación": 20%, "cantidad de items": 5}
     
     """
-    return()
+    df =pd.read_parquet(r'Dataset\UserForGenre.parquet')
+   # Filtrar el DataFrame por el género dado
+    df_genero = df[df['genres'].apply(lambda x: genero in x)]
+    
+    # Agrupar por usuario y sumar las horas jugadas para siempre
+    user_playtime = df_genero.groupby('user_id')['playtime_forever'].sum()
+    
+    # Encontrar el usuario con más horas jugadas para el género dado
+    max_user = user_playtime.idxmax()
+    
+    # Utilizar directamente la columna release_year para obtener el año de lanzamiento
+    df_genero['year'] = df_genero['release_date'].astype(float)
+    
+    # Filtrar filas que tienen un año válido
+    df_genero = df_genero.dropna(subset=['year'])
+    
+    # Agrupar por año y sumar las horas jugadas
+    hours_by_year = df_genero.groupby('year')['playtime_forever'].sum().reset_index()
+    hours_by_year.columns = ['Año', 'Horas']
+    
+    # Convertir a la estructura de lista de diccionarios requerida
+    horas_jugadas = hours_by_year.to_dict(orient='records')
+    
+    # Construir el resultado final
+    resultado = {
+        f"Usuario con más horas jugadas para Género {genero}": max_user,
+        "Horas jugadas": horas_jugadas
+    }
+    
+    return resultado
+
+
+    
+
 
 @app.get("/consulta4")
 async def best_developer_year(year: int = Query(default=2005)):
