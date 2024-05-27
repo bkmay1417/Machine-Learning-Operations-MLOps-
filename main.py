@@ -76,7 +76,7 @@ async def userdata(user_id:str = Query(default='mathzar')):
     
     """
     #userdata
-    user_data = pd.read_parquet(r'Data/userdata.parquet')
+    user_data = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/14062c66a031d8e736219f75536dfb552372ac48/Dataset/userdata.parquet?raw=True')
     # Filtrar el DataFrame para el usuario específico
     user_df = user_data[user_data['user_id'] == user_id]
     
