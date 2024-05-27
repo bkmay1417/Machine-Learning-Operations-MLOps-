@@ -17,13 +17,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
-df_recom = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/2596484f682598ca027fdb025193a4a04d317166/Dataset/recomendacion3_v1.parquet?raw=True')
-# Preprocesamiento de los géneros para generar la matriz TF-IDF
-vectorizer = TfidfVectorizer()
-tfidf_matrix = vectorizer.fit_transform(df_recom.groupby('item_id')['genres'].apply(lambda x: ' '.join(x)))
-# Cálculo de la similitud del coseno
+df_recom = pd.read_parquet(r'https://github.com/bkmay1417/prueva/blob/296b29c99b3e9edfb7ad00c0728984e8f32ee37c/Dataset/recomendacion.parquet?raw=True?raw=True')
 
-cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 
 
 @app.get("/", tags=['Página Principal'])
@@ -199,22 +194,39 @@ async def developer_reviews_analysis(desarrolladora= Query(default='Valve')):
     return(resultado)
 
 @app.get("/Sistema_de_recomendacion")
-async def recomendacion_juego(item_id : float = Query(default=6010.0)):
-    try:
-        # Obtener el índice del juego en el DataFrame
-        idx = df_recom[df_recom['item_id'] == item_id].index[0]
-    except IndexError:
-        # Manejar el caso donde no se encuentra el ID del juego
-        raise HTTPException(status_code=404, detail="Item ID no encontrado.")
-    
-    # Calcular la similitud de coseno entre el juego dado y todos los juegos
-    sim_scores = list(enumerate(cosine_sim[idx]))
-    # Ordenar los juegos por su similitud de coseno
-    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)[1:6]
-    # Obtener los índices de los juegos recomendados
+async def recomendacion_juego(item_id: float = Query(default=10.0)):
+    """
+    10.0 = Counter-Strike
+    """
+    # Verificar que el item_id exista en el DataFrame
+    if item_id not in df_recom['item_id'].values:
+        return "El juego con el item_id proporcionado no existe."
+
+    # Obtener el índice del juego dado su item_id
+    idx = df_recom[df_recom['item_id'] == item_id].index[0]
+
+    # Vectorizar los géneros
+    vectorizer = TfidfVectorizer()
+    tfidf_matrix = vectorizer.fit_transform(df_recom['genres_str'])
+
+    # Obtenemos el vector tf-idf del item_id ingresado
+    item_tfidf_vector = tfidf_matrix[idx]
+
+    # Calcular la similitud del coseno
+    cosine_sim = cosine_similarity(item_tfidf_vector, tfidf_matrix)
+
+    # Obtener las puntuaciones de similitud del juego con todos los demás juegos
+    sim_scores = list(enumerate(cosine_sim.flatten()))
+
+    # Ordenar los juegos por puntuación de similitud (de mayor a menor)
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+    # Obtener los índices de los 5 juegos más similares (excluyendo el propio juego)
+    sim_scores = sim_scores[1:6]
+
+    # Obtener los item_id de los 5 juegos más similares
     game_indices = [i[0] for i in sim_scores]
-    # Obtener los títulos de los juegos recomendados
-    juegos_recomendados = df_recom['title'].iloc[game_indices].tolist() 
-    return juegos_recomendados
+
+    return df_recom['title'].iloc[game_indices].tolist()
 
 
