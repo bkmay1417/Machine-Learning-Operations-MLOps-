@@ -1,6 +1,7 @@
 import os
 import uvicorn
-from fastapi import FastAPI, Request, Query, Path, HTTPException
+from fastapi import FastAPI, Request, Query, Path, HTTPException 
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import json
@@ -10,6 +11,10 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 app= FastAPI(title='Proyecto Integrador I Hecho por Michael Martinez')
+
+# Mount static files directory
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 templates = Jinja2Templates(directory="templates")
 
 df_recom = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/2596484f682598ca027fdb025193a4a04d317166/Dataset/recomendacion3_v1.parquet?raw=True')
