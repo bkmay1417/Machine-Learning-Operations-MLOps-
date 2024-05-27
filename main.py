@@ -66,7 +66,7 @@ async def developer(developer:str = Query(default='Monster Games')):
     return(resultado_dict)
 
 @app.get("/consulta2")
-async def userdata():
+async def userdata(user_id:str = Query(default='mathzar')):
     """
     ( User_id : str ): Debe devolver cantidad de dinero gastado por el usuario,
      el porcentaje de recomendación en base areviews.recommend y cantidad de items.
@@ -75,10 +75,34 @@ async def userdata():
      {"Usuario X" : us213ndjss09sdf, "Dinero gastado": 200 USD, "% de recomendación": 20%, "cantidad de items": 5}
     
     """
+    #userdata
+    user_data = pd.read_parquet(r'Data/userdata.parquet')
+    # Filtrar el DataFrame para el usuario específico
+    user_df = user_data[user_data['user_id'] == user_id]
+    
+    if user_df.empty:
+        return {"Usuario": user_id, "Dinero gastado": "0 USD", "% de recomendación": "0%", "cantidad de items": 0}
+
+    # Calcular la cantidad de dinero gastado
+    dinero_gastado = user_df['price'].sum()
+    
+    # Calcular el porcentaje de recomendaciones
+    total_reviews = len(user_df)
+    recomendaciones_positivas = user_df['recommend'].sum()
+    porcentaje_recomendacion = (recomendaciones_positivas / total_reviews) * 100 if total_reviews > 0 else 0
+    
+    # Calcular la cantidad de ítems
+    cantidad_items = user_df['item_id'].nunique()
+    
+    return {
+        "Usuario": user_id,
+        "Dinero gastado": f"{dinero_gastado:.2f} USD",
+        "% de recomendación": f"{porcentaje_recomendacion:.2f}%",
+        "cantidad de items": cantidad_items
+    }
 
 
 
-    return()
 
 @app.get("/consulta3")
 async def UserForGenre(genero:str = Query(default='Action')):
