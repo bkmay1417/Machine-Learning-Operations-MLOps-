@@ -32,7 +32,7 @@ async def read_root(request: Request):
 
 
 
-@app.get("/consulta1")
+@app.get("/developer")
 async def developer(developer:str = Query(default='Monster Games')):
     """
     ( desarrollador : str ): Cantidad de items y porcentaje de contenido 
@@ -42,8 +42,6 @@ async def developer(developer:str = Query(default='Monster Games')):
     2023	        50                 27%
     2022	        45	               25%
     xxxx	        xx	               xx%
-    
-    Monster Games
     """
     df_games = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/82702a42172b2b0f23c1e24c6f9fdb294c52d78e/Dataset/developer.parquet?raw=True')
 
@@ -70,7 +68,7 @@ async def developer(developer:str = Query(default='Monster Games')):
     # Imprimir el DataFrame resultante
     return(resultado_dict)
 
-@app.get("/consulta2")
+@app.get("/userdata")
 async def userdata(user_id:str = Query(default='mathzar')):
     """
     ( User_id : str ): Debe devolver cantidad de dinero gastado por el usuario,
@@ -109,15 +107,13 @@ async def userdata(user_id:str = Query(default='mathzar')):
 
 
 
-@app.get("/consulta3")
+@app.get("/UserForGenre")
 async def UserForGenre(genero:str = Query(default='Action')):
     """
-    ( User_id : str ): Debe devolver cantidad de dinero gastado por el usuario,
-     el porcentaje de recomendación en base areviews.recommend y cantidad de items.
-
-    Ejemplo de retorno:
-     {"Usuario X" : us213ndjss09sdf, "Dinero gastado": 200 USD, "% de recomendación": 20%, "cantidad de items": 5}
-    
+    def UserForGenre( genero : str ): Debe devolver el usuario que acumula más horas jugadas para el 
+    género dado y una lista de la acumulación de horas jugadas por año de lanzamiento.
+    Ejemplo de retorno: {"Usuario con más horas jugadas para Género X" : us213ndjss09sdf, 
+    "Horas jugadas":[{Año: 2013, Horas: 203}, {Año: 2012, Horas: 100}, {Año: 2011, Horas: 23}]}
     """
     df =pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/24007966593d2680fcec0321bcf520ef0e8a2b1f/Dataset/UserForGenre.parquet?raw=True')
    # Filtrar el DataFrame por el género dado
@@ -154,7 +150,7 @@ async def UserForGenre(genero:str = Query(default='Action')):
     
 
 
-@app.get("/consulta4")
+@app.get("/best_developer_year")
 async def best_developer_year(year: int = Query(default=2005)):
     """
     ( año : int ): Devuelve el top 3 de desarrolladores con juegos MÁS recomendados por 
@@ -175,7 +171,7 @@ async def best_developer_year(year: int = Query(default=2005)):
 
     return(result)
 
-@app.get("/consulta5")
+@app.get("/developer_reviews_analysis")
 async def developer_reviews_analysis(desarrolladora= Query(default='Valve')):
     """
     ( desarrolladora : str ): Según el desarrollador, se devuelve un diccionario con el 

@@ -29,9 +29,9 @@
 
             // Images (in the format of 'url': 'alignment').
             images: {
-                'https://www.tooltyp.com/wp-content/uploads/2014/10/1900x920-8-beneficios-de-usar-imagenes-en-nuestros-sitios-web.jpg': 'center',
-                'https://iccsi.com.ar/wp-content/uploads/como-se-llama-la-ia-que-describe-imagenes.webp': 'center',
-                'https://casamontessori.edu.co/wp-content/uploads/2018/05/fondos-pantalla-paisajes-hermosos-bonitos-naturales-escritorio-fotografias-hd-wallpaper-imagenes-fotos-3d-gato-gatitos-tierno-1-1.jpg': 'center'
+                'https://events.altair.com/wp-content/uploads/2023/12/CORP_Events_Digital_Future-Industry_1920x900_landing-page-hero-2.jpg': 'center',
+                'https://leverx.com/hs-fs/hubfs/solutions/sac-bg.webp?width=1920&name=sac-bg.webp': 'center',
+                'https://www.cair-cas.org.hk/uploads/image/202205/9d8dd39b446730cd29f7bad0bb75ed7f.png': 'center'
             },
 
             // Delay.
