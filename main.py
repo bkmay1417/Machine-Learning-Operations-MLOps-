@@ -1,3 +1,11 @@
+"""
+Desarrollador : Michael Martinez.
+Github:https://github.com/bkmay1417
+email : yam8991@gmail.com
+fecha: 28/05/2024
+"""
+# LIbrerias necesaria
+
 import os
 import uvicorn
 from fastapi import FastAPI, Request, Query, Path, HTTPException 
@@ -6,19 +14,25 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 import json
 import pandas as pd
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-app= FastAPI(title='Proyecto Integrador I Hecho por Michael Martinez')
+app= FastAPI(title = 'Machine Learning Operations (MLOps)',
+    description='API para realizar consultas',
+    version='1.01')
 
 # Mount static files directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
+#cargar Dataset para ser utilizados por los endpoints
 df_recom = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/d5610d0cdf2412a4fdcc6572f39c0268fe51dae9/Dataset/recomendacion.parquet?raw=True')
-
+df_games = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/82702a42172b2b0f23c1e24c6f9fdb294c52d78e/Dataset/developer.parquet?raw=True')
+user_data = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/14062c66a031d8e736219f75536dfb552372ac48/Dataset/userdata.parquet?raw=True')
+df = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/24007966593d2680fcec0321bcf520ef0e8a2b1f/Dataset/UserForGenre.parquet?raw=True')
+merged_df = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/8f87ccc010ef4ab3025d5e95d5f0cc1ee11fd276/Dataset/best_developer_year.parquet?raw=True')
+reviews = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/8f87ccc010ef4ab3025d5e95d5f0cc1ee11fd276/Dataset/reviews_analysis.parquet?raw=True')
 
 
 @app.get("/", tags=['Página Principal'])
@@ -27,7 +41,7 @@ async def read_root(request: Request):
 
 
 
-@app.get("/developer")
+@app.get("/developer",tags=["Funciones"])
 async def developer(developer:str = Query(default='Monster Games')):
     """
     ( desarrollador : str ): Cantidad de items y porcentaje de contenido 
@@ -38,7 +52,7 @@ async def developer(developer:str = Query(default='Monster Games')):
     2022	        45	               25%
     xxxx	        xx	               xx%
     """
-    df_games = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/82702a42172b2b0f23c1e24c6f9fdb294c52d78e/Dataset/developer.parquet?raw=True')
+    
 
     df_filtrado = df_games[df_games['developer'] == developer]
 
@@ -63,7 +77,7 @@ async def developer(developer:str = Query(default='Monster Games')):
     # Imprimir el DataFrame resultante
     return(resultado_dict)
 
-@app.get("/userdata")
+@app.get("/userdata",tags=["Funciones"])
 async def userdata(user_id:str = Query(default='mathzar')):
     """
     ( User_id : str ): Debe devolver cantidad de dinero gastado por el usuario,
@@ -74,7 +88,7 @@ async def userdata(user_id:str = Query(default='mathzar')):
     
     """
     #userdata
-    user_data = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/14062c66a031d8e736219f75536dfb552372ac48/Dataset/userdata.parquet?raw=True')
+    
     # Filtrar el DataFrame para el usuario específico
     user_df = user_data[user_data['user_id'] == user_id]
     
@@ -102,7 +116,7 @@ async def userdata(user_id:str = Query(default='mathzar')):
 
 
 
-@app.get("/UserForGenre")
+@app.get("/UserForGenre", tags=["Funciones"])
 async def UserForGenre(genero:str = Query(default='Action')):
     """
     def UserForGenre( genero : str ): Debe devolver el usuario que acumula más horas jugadas para el 
@@ -110,7 +124,7 @@ async def UserForGenre(genero:str = Query(default='Action')):
     Ejemplo de retorno: {"Usuario con más horas jugadas para Género X" : us213ndjss09sdf, 
     "Horas jugadas":[{Año: 2013, Horas: 203}, {Año: 2012, Horas: 100}, {Año: 2011, Horas: 23}]}
     """
-    df =pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/24007966593d2680fcec0321bcf520ef0e8a2b1f/Dataset/UserForGenre.parquet?raw=True')
+   
    # Filtrar el DataFrame por el género dado
     df_genero = df[df['genres'].apply(lambda x: genero in x)]
     
@@ -145,7 +159,7 @@ async def UserForGenre(genero:str = Query(default='Action')):
     
 
 
-@app.get("/best_developer_year")
+@app.get("/best_developer_year",tags=["Funciones"])
 async def best_developer_year(year: int = Query(default=2005)):
     """
     ( año : int ): Devuelve el top 3 de desarrolladores con juegos MÁS recomendados por 
@@ -155,7 +169,7 @@ async def best_developer_year(year: int = Query(default=2005)):
     [{"Puesto 1" : X}, {"Puesto 2" : Y},{"Puesto 3" : Z}]
     
     """
-    merged_df = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/8f87ccc010ef4ab3025d5e95d5f0cc1ee11fd276/Dataset/best_developer_year.parquet?raw=True')
+    
     merged_df = merged_df[(merged_df['release_date'] == year) ]
     developer_counts = merged_df['developer'].value_counts()
     top_developers = developer_counts.head(3).index
@@ -166,7 +180,7 @@ async def best_developer_year(year: int = Query(default=2005)):
 
     return(result)
 
-@app.get("/developer_reviews_analysis")
+@app.get("/developer_reviews_analysis", tags=["Funciones"])
 async def developer_reviews_analysis(desarrolladora= Query(default='Valve')):
     """
     ( desarrolladora : str ): Según el desarrollador, se devuelve un diccionario con el 
@@ -178,7 +192,7 @@ async def developer_reviews_analysis(desarrolladora= Query(default='Valve')):
     {'Valve' : [Negative = 182, Positive = 278]}
     
     """
-    reviews = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/8f87ccc010ef4ab3025d5e95d5f0cc1ee11fd276/Dataset/reviews_analysis.parquet?raw=True')
+    
 
     reviews = reviews[(reviews['developer'] == desarrolladora) ]
     counts = reviews['sentiment_analysis'].value_counts()
@@ -193,7 +207,7 @@ async def developer_reviews_analysis(desarrolladora= Query(default='Valve')):
     
     return(resultado)
 
-@app.get("/Sistema_de_recomendacion")
+@app.get("/Sistema_de_recomendacion por Genero", tags=["Sistema de Recomendacion"])
 async def recomendacion_juego(item_id: float = Query(default=10.0)):
     """
     10.0 = Counter-Strike
