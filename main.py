@@ -4,37 +4,35 @@ Github:https://github.com/bkmay1417
 email : yam8991@gmail.com
 fecha: 28/05/2024
 """
-# LIbrerias necesaria
-
-import os
-import uvicorn
-from fastapi import FastAPI, Request, Query, Path, HTTPException 
+# LIbrerias Utilizadas
+from fastapi import FastAPI, Request, Query
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-import json
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+
+# Declaracion de la clase FastAPI
 app= FastAPI(title = 'Machine Learning Operations (MLOps)',
     description='API para realizar consultas',
     version='1.01')
-
-# Mount static files directory
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-templates = Jinja2Templates(directory="templates")
 
 #cargar Dataset para ser utilizados por los endpoints
 df_recom = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/d5610d0cdf2412a4fdcc6572f39c0268fe51dae9/Dataset/recomendacion.parquet?raw=True')
 df_games = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/82702a42172b2b0f23c1e24c6f9fdb294c52d78e/Dataset/developer.parquet?raw=True')
 user_data = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/14062c66a031d8e736219f75536dfb552372ac48/Dataset/userdata.parquet?raw=True')
 df = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/24007966593d2680fcec0321bcf520ef0e8a2b1f/Dataset/UserForGenre.parquet?raw=True')
-merged_df = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/8f87ccc010ef4ab3025d5e95d5f0cc1ee11fd276/Dataset/best_developer_year.parquet?raw=True')
-reviews = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/8f87ccc010ef4ab3025d5e95d5f0cc1ee11fd276/Dataset/reviews_analysis.parquet?raw=True')
 
 
+
+# Mount static files directory
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+templates = Jinja2Templates(directory="templates")
+
+
+# Se muestra una porta hecha con html
 @app.get("/", tags=['Página Principal'])
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -46,13 +44,11 @@ async def developer(developer:str = Query(default='Monster Games')):
     """
     ( desarrollador : str ): Cantidad de items y porcentaje de contenido 
     Free por año según empresa desarrolladora. Ejemplo de retorno:
-
-    Año	    Cantidad de Items	Contenido Free
-    2023	        50                 27%
-    2022	        45	               25%
-    xxxx	        xx	               xx%
     """
-    
+    #Año	    Cantidad de Items	Contenido Free
+    #2023	        50                 27%
+    #2022	        45	               25%
+    #xxxx	        xx	               xx% 
 
     df_filtrado = df_games[df_games['developer'] == developer]
 
@@ -153,10 +149,7 @@ async def UserForGenre(genero:str = Query(default='Action')):
         "Horas jugadas": horas_jugadas
     }
     
-    return resultado
-
-
-    
+    return resultado 
 
 
 @app.get("/best_developer_year",tags=["Funciones"])
@@ -169,9 +162,9 @@ async def best_developer_year(year: int = Query(default=2005)):
     [{"Puesto 1" : X}, {"Puesto 2" : Y},{"Puesto 3" : Z}]
     
     """
-    
-    merged_df = merged_df[(merged_df['release_date'] == year) ]
-    developer_counts = merged_df['developer'].value_counts()
+    best_developer = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/8f87ccc010ef4ab3025d5e95d5f0cc1ee11fd276/Dataset/best_developer_year.parquet?raw=True')
+    best_developer = best_developer[(best_developer['release_date'] == year) ]
+    developer_counts = best_developer['developer'].value_counts()
     top_developers = developer_counts.head(3).index
     result = []
     for i, developer in enumerate(top_developers, 1):
@@ -179,6 +172,7 @@ async def best_developer_year(year: int = Query(default=2005)):
 
 
     return(result)
+
 
 @app.get("/developer_reviews_analysis", tags=["Funciones"])
 async def developer_reviews_analysis(desarrolladora= Query(default='Valve')):
@@ -192,10 +186,10 @@ async def developer_reviews_analysis(desarrolladora= Query(default='Valve')):
     {'Valve' : [Negative = 182, Positive = 278]}
     
     """
-    
+    dev_reviews = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/8f87ccc010ef4ab3025d5e95d5f0cc1ee11fd276/Dataset/reviews_analysis.parquet?raw=True')
 
-    reviews = reviews[(reviews['developer'] == desarrolladora) ]
-    counts = reviews['sentiment_analysis'].value_counts()
+    dev_reviews = dev_reviews[(dev_reviews['developer'] == desarrolladora) ]
+    counts = dev_reviews['sentiment_analysis'].value_counts()
     # Crear el diccionario de salida
     resultado = {
         desarrolladora: [
@@ -206,6 +200,7 @@ async def developer_reviews_analysis(desarrolladora= Query(default='Valve')):
 
     
     return(resultado)
+
 
 @app.get("/Sistema_de_recomendacion por Genero", tags=["Sistema de Recomendacion"])
 async def recomendacion_juego(item_id: float = Query(default=10.0)):
