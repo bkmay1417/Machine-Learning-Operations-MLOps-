@@ -17,7 +17,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
 
-df_recom = pd.read_parquet(r'https://github.com/bkmay1417/prueva/blob/296b29c99b3e9edfb7ad00c0728984e8f32ee37c/Dataset/recomendacion.parquet?raw=True?raw=True')
+df_recom = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/d5610d0cdf2412a4fdcc6572f39c0268fe51dae9/Dataset/recomendacion.parquet?raw=True')
 
 
 
