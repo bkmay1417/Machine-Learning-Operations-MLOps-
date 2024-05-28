@@ -113,7 +113,7 @@ async def userdata(user_id:str = Query(default='mathzar')):
 
 
 @app.get("/UserForGenre", tags=["Funciones"])
-async def UserForGenre(genero:str = Query(default='Action')):
+async def UserForGenre(genero:str = Query(default='action')):
     """
     def UserForGenre( genero : str ): Debe devolver el usuario que acumula más horas jugadas para el 
     género dado y una lista de la acumulación de horas jugadas por año de lanzamiento.
