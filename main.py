@@ -22,7 +22,7 @@ app= FastAPI(title = 'Machine Learning Operations (MLOps)',
 df_recom = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/d5610d0cdf2412a4fdcc6572f39c0268fe51dae9/Dataset/recomendacion.parquet?raw=True')
 df_games = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/82702a42172b2b0f23c1e24c6f9fdb294c52d78e/Dataset/developer.parquet?raw=True')
 user_data = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/14062c66a031d8e736219f75536dfb552372ac48/Dataset/userdata.parquet?raw=True')
-df = pd.read_parquet(r'Dataset\UserForGenre.parquet')
+df = pd.read_parquet(r'https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-/blob/bf5a5ffbea983f05ab1d7cb4bffd0efb0ae0a3d7/Dataset/UserForGenre.parquet?raw=True')
 
 
 
