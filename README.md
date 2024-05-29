@@ -46,7 +46,7 @@ A partir de los 3 datasets proporcionados (steam_games, user_reviews y user_item
 
 Se realizó un análisis exploratorio de los datos de los 3 conjuntos de datos para así entender las estadísticas identificando patrones y tendencias de los juegos y géneros mas recomendados por los usuarios, encontrar valores atípicos y orientar un futuro análisis.
 
-[EDA](./"link al notebook del EDA") 
+[EDA]("./EDA.ipynb") 
 
 ## Fastapi :
 
@@ -88,7 +88,7 @@ Finalmente se uso Render para deployar fastapi en una página web.
 
 [link del Proyecto](https://machine-learning-operations-mlops-f1jx.onrender.com)
 
-[link del video](https://machine-learning-operations-mlops-f1jx.onrender.com)
+[link del video](https://drive.google.com/file/d/1es5iFOBZCpHyY4xwT2KMiooBb79Baj1I/view?usp=drive_link)
 
 
 
