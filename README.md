@@ -77,6 +77,8 @@ Estas funciones son:
 
 Se creo el entorno vitual para fastapi y se construyo el main.py necesario para usar las funciones.
 
+<p align="center"><img src="img/gifml.gif" alt="portada"  height="100%" width="100%" /></p>
+
 ## RENDER: 
 
 ![Descripción de la imagen](https://docs.vendure.io/assets/images/deploy-to-render-b2b7fbd4d3153076c1e91c3d9969a719.webp)
