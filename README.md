@@ -75,9 +75,9 @@ Estas funciones son:
 
 + **`Read_root:`** Esta función maneja la solicitud GET a la ruta raíz ("/"). Utiliza Jinja2Templates para renderizar una página HTML utilizada como portada del proyecto.
 
-Se creo el entorno vitual para fastapi y se construyo el main.py necesario para usar las funciones.
-
 <p align="center"><img src="img/gifml.gif" alt="portada"  height="100%" width="100%" /></p>
+
+Se creo el entorno vitual para fastapi y se construyo el main.py necesario para usar las funciones.
 
 ## RENDER: 
 
