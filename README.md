@@ -16,6 +16,12 @@
     <img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green" />
     <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/bkmay1417/Machine-Learning-Operations-MLOps-" />
 </div>
+
+## Tabla de Contenidos
+
+[Introducion](#Introducion) | [Exploración, Transformación y Carga (ETL)](#Exploración,-Transformación-y-Carga-(ETL)) | [Funcionalidades de la API con FastAPI](#Funcionalidades-de-la-API-con-FastAPI) | [Fastapi](#Fastapi)  | [Render](#Render) 
+
+## Introducion
 Este proyecto es una API web desarrollada con FastAPI deployada en render que permite acceder a varios servicios relacionados con análisis de datos de videojuegos de la platatafoma de steam para poder crear un Producto Minimo Viable (MVP), que contiene una la implementaciónde una API. La API proporciona endpoints para obtener información sobre desarrolladores, usuarios, géneros de videojuegos, recomendaciones de juegos, análisis de reseñas y un sistema de recomendacion hecho en base a la  similitud del coseno. Los datos se obtienen de archivos json los cual fueron limpiados y almacenados en formato parquet .
 
 ## Exploración, Transformación y Carga (ETL)
