@@ -19,12 +19,12 @@
 
 ## Tabla de Contenidos
 
-[Introducion](#Introducion) | [Exploración, Transformación y Carga (ETL)](#exploración-transformación-y-carga(ETL)) | [Funcionalidades de la API con FastAPI](#Funcionalidades-de-la-API-con-FastAPI) | [Fastapi](#Fastapi)  | [Render](#Render) 
+[Introducion](#Introducion) | [Exploración, Transformación y Carga](#exploración-transformación-y-carga) | [Funcionalidades de la API con FastAPI](#Funcionalidades-de-la-API-con-FastAPI) | [Fastapi](#Fastapi)  | [Render](#Render) 
 
 ## Introducion
 Este proyecto es una API web desarrollada con FastAPI deployada en render que permite acceder a varios servicios relacionados con análisis de datos de videojuegos de la platatafoma de steam para poder crear un Producto Minimo Viable (MVP), que contiene una la implementaciónde una API. La API proporciona endpoints para obtener información sobre desarrolladores, usuarios, géneros de videojuegos, recomendaciones de juegos, análisis de reseñas y un sistema de recomendacion hecho en base a la  similitud del coseno. Los datos se obtienen de archivos json los cual fueron limpiados y almacenados en formato parquet .
 
-## Exploración, Transformación y Carga(ETL)
+## Exploración, Transformación y Carga
 
 ![Descripción de la imagen](https://assets-global.website-files.com/634fa785d369cb60d80b6dd1/6393298e18f50e62a1657530_ETL%20process%20DataChannel.webp)
 
