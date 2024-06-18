@@ -47,7 +47,7 @@ A partir de los 3 datasets proporcionados (steam_games, user_reviews y user_item
 
 ## Análisis Exploratorio de Datos (EDA)
 
-![Descripción de la imagen](https://i.ibb.co/PFJKrQg/stock-photo-eda-concept-text-sunlight-d-illustration-2267252419-transformed.jpg)
+![Descripción de la imagen](https://i.ibb.co/S7fkB55/stock-photo-eda-concept-text-sunlight-d-illustration-2267252419-transformed-jpg-1718749918423.jpg)
 
 
 Se realizó un análisis exploratorio de los datos de los 3 conjuntos de datos para así entender las estadísticas identificando patrones y tendencias de los juegos y géneros mas recomendados por los usuarios, encontrar valores atípicos y orientar un futuro análisis.
