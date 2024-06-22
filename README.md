@@ -22,7 +22,7 @@
 [Introducion](#Introducion) | [Exploración, Transformación y Carga](#exploración-transformación-y-carga) | [Fastapi](#Fastapi)  | [Render](#Render) 
 
 ## Introducion
-Este proyecto es una API web desarrollada con FastAPI deployada en render que permite acceder a varios servicios relacionados con análisis de datos de videojuegos de la platatafoma de steam para poder crear un Producto Minimo Viable (MVP), que contiene una la implementaciónde una API. La API proporciona endpoints para obtener información sobre desarrolladores, usuarios, géneros de videojuegos, recomendaciones de juegos, análisis de reseñas y un sistema de recomendacion hecho en base a la  similitud del coseno. Los datos se obtienen de archivos json los cual fueron limpiados y almacenados en formato parquet .
+Este proyecto es una API web desarrollada con FastAPI desplegada en render que permite acceder a varios servicios relacionados con análisis de datos de videojuegos de la plataforma de steam para poder crear un Producto Minimo Viable (MVP), que contiene una la implementaciónde una API. La API proporciona endpoints para obtener información sobre desarrolladores, usuarios, géneros de videojuegos, recomendaciones de juegos, análisis de reseñas y un sistema de recomendacion hecho en base a la  similitud del coseno. Los datos se obtienen de archivos json los cual fueron limpiados y almacenados en formato parquet .
 
 ## Exploración, Transformación y Carga
 
@@ -91,6 +91,58 @@ Se creo el entorno vitual para fastapi y se construyo el main.py necesario para 
 
 
 + [Fastapi main link](/main.py)
+
+## Instalación y Uso
+
+### Prerrequisitos
+
+Asegúrate de tener instaladas las siguientes herramientas:
+
+- Python 3.x
+- FastAPI
+- Uvicorn
+
+### Instalación
+
+1. Clona el repositorio:
+    ```sh
+    git clone https://github.com/bkmay1417/Machine-Learning-Operations-MLOps-.git
+    ```
+
+2. Navega al directorio del proyecto:
+    ```sh
+    cd Machine-Learning-Operations-MLOps-
+    ```
+
+3. Crea un entorno virtual:
+    ```sh
+    python -m venv env
+    ```
+
+4. Activa el entorno virtual:
+    - En Windows:
+        ```sh
+        .\env\Scripts\activate
+        ```
+    - En macOS/Linux:
+        ```sh
+        source env/bin/activate
+        ```
+
+5. Instala las dependencias:
+    ```sh
+    pip install -r requirements.txt
+    ```
+
+### Uso
+
+1. Ejecuta la aplicación FastAPI:
+    ```sh
+    uvicorn main:app --reload
+    ```
+
+2. Abre tu navegador y ve a `http://127.0.0.1:8000` para acceder a la API.
+
 
 Finalmente se uso Render para deployar fastapi en una página web.
 
