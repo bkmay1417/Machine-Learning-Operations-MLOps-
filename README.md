@@ -24,7 +24,7 @@
 ## Introducion
 Este proyecto es una API web desarrollada con FastAPI desplegada en render que permite acceder a varios servicios relacionados con análisis de datos de videojuegos de la plataforma de steam para poder crear un Producto Minimo Viable (MVP), que contiene una la implementaciónde una API. La API proporciona endpoints para obtener información sobre desarrolladores, usuarios, géneros de videojuegos, recomendaciones de juegos, análisis de reseñas y un sistema de recomendacion hecho en base a la  similitud del coseno. Los datos se obtienen de archivos json los cual fueron limpiados y almacenados en formato parquet .
 
-## Exploración, Transformación y Carga
+## Extracion, Transformación y Carga
 
 ![Descripción de la imagen](https://assets-global.website-files.com/634fa785d369cb60d80b6dd1/6393298e18f50e62a1657530_ETL%20process%20DataChannel.webp)
 
@@ -52,12 +52,12 @@ A partir de los 3 datasets proporcionados (steam_games, user_reviews y user_item
 
 Se realizó un análisis exploratorio de los datos de los 3 conjuntos de datos para así entender las estadísticas identificando patrones y tendencias de los juegos y géneros mas recomendados por los usuarios, encontrar valores atípicos y orientar un futuro análisis.
 
-[EDA]("./EDA.ipynb") 
+[Análisis Exploratorio de Datos (EDA)]("./EDA.ipynb") 
 
 ## Fastapi:
 
 <div align="center">
-  <img src="https://media.licdn.com/dms/image/D5612AQH0PUY2JLO2mg/article-cover_image-shrink_600_2000/0/1697375557641?e=2147483647&v=beta&t=0FpqTAdO-BiTXihJP1HymWJfPf87WymWLJj75mYWC4U" alt="Ejemplo de Imagen">
+  <img src="https://media.licdn.com/dms/image/D5612AQH0PUY2JLO2mg/article-cover_image-shrink_600_2000/0/1697375557641?e=2147483647&v=beta&t=0FpqTAdO-BiTXihJP1HymWJfPf87WymWLJj75mYWC4U" alt="FastAPI">
 </div>
 
  Se construyeron 5 funciones que permiten realizar consultas mas un sistema de recomenacion
@@ -150,6 +150,15 @@ Finalmente se uso Render para deployar fastapi en una página web.
 
 [link del video](https://drive.google.com/file/d/1es5iFOBZCpHyY4xwT2KMiooBb79Baj1I/view?usp=drive_link)
 
+## Contribuir
+
+Si deseas contribuir a este proyecto, por favor sigue los pasos a continuación:
+
+1. Haz un fork del repositorio.
+2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`).
+3. Realiza tus cambios y haz commit (`git commit -am 'Añadir nueva funcionalidad'`).
+4. Sube tu rama (`git push origin feature/nueva-funcionalidad`).
+5. Abre un Pull Request.
 
 
 ## Desarrolladores
