@@ -60,7 +60,7 @@ Se realizó un análisis exploratorio de los datos de los 3 conjuntos de datos p
   <img src="https://media.licdn.com/dms/image/D5612AQH0PUY2JLO2mg/article-cover_image-shrink_600_2000/0/1697375557641?e=2147483647&v=beta&t=0FpqTAdO-BiTXihJP1HymWJfPf87WymWLJj75mYWC4U" alt="FastAPI">
 </div>
 
- Se construyeron 5 funciones que permiten realizar consultas mas un sistema de recomenacion
+Se desarrollaron cinco funciones para facilitar consultas, además de implementarse un sistema de recomendaciones
 
 
 Estas funciones son:
