@@ -13,7 +13,7 @@
 <p id="readme-top"></p>
 
 <div style="display: flex; align-items: center;">
-    <img src="https://img.shields.io/badge/STATUS-EN%20DESAROLLO-green" />
+    <img src="https://img.shields.io/badge/STATUS-BETA-orange" />
     <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/bkmay1417/Machine-Learning-Operations-MLOps-" />
 </div>
 
